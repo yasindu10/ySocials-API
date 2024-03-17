@@ -1,4 +1,4 @@
-const User = require('../models/user')
+const User = require('../models/User')
 const CustomError = require('../errors/customErrors')
 const { getStorage, ref, uploadBytes, getDownloadURL } = require('firebase/storage')
 const { v4: uuidv4 } = require('uuid')
