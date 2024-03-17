@@ -9,6 +9,7 @@ const errorHandeller = require('./middleware/errorHandeller')
 const { authorization } = require('./middleware/authorization')
 
 const firebase = require('firebase/app')
+const cors = require('cors')
 
 const authRouter = require('./routers/authRouter')
 const postRouter = require('./routers/postRouter')
@@ -16,6 +17,7 @@ const userRouter = require('./routers/userRouter')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cors({ origin: "*" }))
 
 app.get('/api/v1/test', (req, res) => {
     console.log('hello world')
