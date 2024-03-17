@@ -19,17 +19,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({ origin: "*" }))
 
-app.get('/api/v1/test', (req, res) => {
-    console.log('hello world')
-})
-
 firebase.initializeApp(require('./firebase/config'))
 
 app.use('/api/v1/auth', authRouter)
 app.use(authorization) // authorization
 app.use('/api/v1/post', postRouter)
 app.use('/api/v1/user', userRouter)
-
 
 // error handeller
 app.use(errorHandeller)
