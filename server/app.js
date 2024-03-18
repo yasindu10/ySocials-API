@@ -21,12 +21,8 @@ app.use(cors({ origin: "*" }))
 
 firebase.initializeApp(require('./firebase/config'))
 
-app.use((req, res) => {
-    res.send('hii')
-})
-
 app.use('/api/v1/auth', authRouter)
-app.use(authorization) // authorization
+// app.use(authorization) // authorization
 app.use('/api/v1/post', postRouter)
 app.use('/api/v1/user', userRouter)
 
