@@ -24,19 +24,17 @@ const register = async (req, res) => {
     if (!req.file)
         throw new CustomError('no image selected', 400)
 
-    console.log(req.file)
-    res.status(201).json({ success: true, msg: 'ok' })
-    // const refPath = ref(
-    //     getStorage(),
-    //     `profiles/${uuidv4()}.${path.extname(req.file.originalname)}`
-    // )
-    // const result = await uploadBytes(refPath, req.file)
-    // const image = await getDownloadURL(result.ref)
+    const refPath = ref(
+        getStorage(),
+        `profiles/${uuidv4()}.${path.extname(req.file.originalname)}`
+    )
+    const result = await uploadBytes(refPath, req.file)
+    const image = await getDownloadURL(result.ref)
 
-    // const user = await User.create({ ...req.body, image })
-    // const token = user.createToken()
+    const user = await User.create({ ...req.body, image })
+    const token = user.createToken()
 
-    // res.status(201).json({ success: true, data: { token } })
+    res.status(201).json({ success: true, data: { token } })
 }
 
 module.exports = {
