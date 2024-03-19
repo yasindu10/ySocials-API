@@ -34,7 +34,7 @@ const register = async (req, res) => {
     const user = await User.create({ ...req.body, image })
     const token = user.createToken()
 
-    res.status(201).json({ success: true, data: { token } })
+    res.status(201).json({ success: true, data: { token, user } })
 }
 
 module.exports = {
