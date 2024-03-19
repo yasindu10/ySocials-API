@@ -33,7 +33,7 @@ const register = async (req, res) => {
 
     const user = await User.create({ ...req.body, image })
     const token = user.createToken()
-    user.password = ''
+    delete user.password
     res.status(201).json({ success: true, data: { token, user } })
 }
 
