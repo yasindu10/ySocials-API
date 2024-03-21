@@ -11,14 +11,23 @@ const login = async (req, res) => {
         throw new CustomError('please enter username and password', 404)
 
     const user = await User.findOne({ username })
+    if (!user)
+        throw new CustomError(`No user with username: ${username}`, 404)
 
-    const isPasswordCurrect = user.comparePassword(password)
+    const isPasswordCurrect = await user.comparePassword(password)
     if (!isPasswordCurrect)
         throw new CustomError('Wrong password', 400)
 
-    user.password = ''
+    const currentUser = user.toJSON()
+    delete currentUser.password
+
     const token = user.createToken()
-    res.status(201).json({ success: true, data: { token, user } })
+    res.status(201).json({
+        success: true, data: {
+            token,
+            user: currentUser
+        }
+    })
 }
 
 const register = async (req, res) => {
@@ -33,9 +42,16 @@ const register = async (req, res) => {
     const image = await getDownloadURL(result.ref)
 
     const user = await User.create({ ...req.body, image })
+    const currentUser = user.toJSON()
+    delete currentUser.password
+    
     const token = user.createToken()
-    user.password = ''
-    res.status(201).json({ success: true, data: { token, user } })
+    res.status(201).json({
+        success: true, data: {
+            token,
+            user: currentUser
+        }
+    })
 }
 
 module.exports = {
