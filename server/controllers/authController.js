@@ -16,8 +16,9 @@ const login = async (req, res) => {
     if (!isPasswordCurrect)
         throw new CustomError('Wrong password', 400)
 
+    user.password = ''
     const token = user.createToken()
-    res.status(201).json({ success: true, data: { token } })
+    res.status(201).json({ success: true, data: { token, user } })
 }
 
 const register = async (req, res) => {
