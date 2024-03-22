@@ -36,15 +36,18 @@ const register = async (req, res) => {
 
     const refPath = ref(
         getStorage(),
-        `profiles/${uuidv4()}.${path.extname(req.file.originalname)}`
+        `profiles/${uuidv4()}${path.extname(req.file.originalname)}`
     )
-    const result = await uploadBytes(refPath, req.file)
+
+    // Set content type based on the file extension or mime type
+    const contentType = req.file.mimetype || 'image/jpeg';
+    const result = await uploadBytes(refPath, req.file.buffer, { contentType })
     const image = await getDownloadURL(result.ref)
 
     const user = await User.create({ ...req.body, image })
     const currentUser = user.toJSON()
     delete currentUser.password
-    
+
     const token = user.createToken()
     res.status(201).json({
         success: true, data: {
