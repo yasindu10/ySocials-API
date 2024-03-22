@@ -40,7 +40,11 @@ const createPost = async (req, res) => {
     const result = await uploadBytes(refPath, req.file.buffer, { contentType })
     const imageUrl = await getDownloadURL(result.ref)
 
-    const post = await Post.create({ ...req.body, image: imageUrl })
+    const post = await Post.create({
+        ...req.body,
+        image: imageUrl,
+        authorId: req.user.userId
+    })
     res.status(201).json({ success: true, data: post })
 }
 
