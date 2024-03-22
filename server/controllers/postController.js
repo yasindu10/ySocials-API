@@ -35,7 +35,10 @@ const createPost = async (req, res) => {
         getStorage(),
         `posts/${uuidv4()}.${path.extname(req.file.originalname)}`
     )
-    const result = await uploadBytes(refPath, req.file)
+    // Set content type based on the file extension or mime type
+    const contentType = req.file.mimetype || 'image/jpeg';
+
+    const result = await uploadBytes(refPath, req.file, { contentType })
     const imageUrl = await getDownloadURL(result.ref)
 
     const post = await Post.create({ ...req.body, image: imageUrl })
