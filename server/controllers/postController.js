@@ -2,6 +2,7 @@ const Post = require('../models/Post')
 const { getStorage, ref, uploadBytes, getDownloadURL } = require('firebase/storage')
 const { v4: uuidv4 } = require('uuid')
 const path = require('path')
+const CustomError = require('../errors/customErrors')
 
 const getPosts = async (req, res) => {
     const { userId, tag } = req.query
@@ -27,6 +28,9 @@ const getPosts = async (req, res) => {
 }
 
 const createPost = async (req, res) => {
+    if (!req.file)
+        throw new CustomError('No image provided', 404)
+
     const refPath = ref(
         getStorage(),
         `posts/${uuidv4()}.${path.extname(req.file.originalname)}`
