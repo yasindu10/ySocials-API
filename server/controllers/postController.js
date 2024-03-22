@@ -1,6 +1,6 @@
 const Post = require('../models/Post')
 const { getStorage, ref, uploadBytes, getDownloadURL } = require('firebase/storage')
-const { v4: uuidv4 } = require('uuid')
+const { v1: uuidv1 } = require('uuid')
 const path = require('path')
 const CustomError = require('../errors/customErrors')
 
@@ -33,11 +33,10 @@ const createPost = async (req, res) => {
 
     const refPath = ref(
         getStorage(),
-        `posts/${uuidv4()}.${path.extname(req.file.originalname)}`
+        `posts/${uuidv1()}${path.extname(req.file.originalname)}`
     )
     // Set content type based on the file extension or mime type
     const contentType = req.file.mimetype || 'image/jpeg';
-
     const result = await uploadBytes(refPath, req.file, { contentType })
     const imageUrl = await getDownloadURL(result.ref)
 
