@@ -24,7 +24,7 @@ const getPosts = async (req, res) => {
     const limit = Number(req.query.limit) || 12;
 
     const finalPosts = await posts.skip((pages - 1) * limit).limit(limit);
-    res.status(200).json({ success: true, data: finalPosts })
+    res.status(200).json({ success: true, data: { post: finalPosts } })
 }
 
 const createPost = async (req, res) => {
