@@ -48,10 +48,8 @@ const register = async (req, res) => {
     const currentUser = user.toJSON()
     delete currentUser.password
 
-    const token = user.createToken()
     res.status(201).json({
         success: true, data: {
-            token,
             user: currentUser
         }
     })
