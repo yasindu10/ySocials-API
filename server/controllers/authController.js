@@ -14,8 +14,8 @@ const login = async (req, res) => {
     if (!user)
         throw new CustomError(`No user with username: ${username}`, 404)
 
-    const isPasswordCurrect = await user.comparePassword(password)
-    if (!isPasswordCurrect)
+    const isPasswordCurrent = await user.comparePassword(password)
+    if (!isPasswordCurrent)
         throw new CustomError('Wrong password', 400)
 
     const currentUser = user.toJSON()

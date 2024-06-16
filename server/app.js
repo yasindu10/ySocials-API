@@ -5,7 +5,7 @@ const express = require('express')
 const app = express()
 
 const connectDB = require('./db/connectDb')
-const errorHandeller = require('./middleware/errorHandler')
+const errorHandler = require('./middleware/errorHandler')
 const { authorization } = require('./middleware/authorization')
 
 const firebase = require('firebase/app')
@@ -26,8 +26,8 @@ app.use(authorization) // authorization
 app.use('/api/v1/post', postRouter)
 app.use('/api/v1/user', userRouter)
 
-// error handeller
-app.use(errorHandeller)
+// error handler
+app.use(errorHandler)
 
 const port = process.env.PORT || 8080
 const start = async () => {
