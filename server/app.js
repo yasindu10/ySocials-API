@@ -5,7 +5,7 @@ const express = require('express')
 const app = express()
 
 const connectDB = require('./db/connectDb')
-const errorHandeller = require('./middleware/errorHandeller')
+const errorHandeller = require('./middleware/errorHandler')
 const { authorization } = require('./middleware/authorization')
 
 const firebase = require('firebase/app')
